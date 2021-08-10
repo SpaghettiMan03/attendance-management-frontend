@@ -6,17 +6,21 @@ type Props = {
 } 
 
 const GrpcButton: React.FC<Props> = ({clients}) => {
-  const { employees, listEmployees } = useEmployee(clients.employeeServiceClient)
+  const { employees, gender, position, listEmployees } = useEmployee(clients.employeeServiceClient)
   
     return (
       <>
         <button onClick={listEmployees}>
           Try gRPC
         </button>
-        {employees?.forEach(employee => {
+        {employees.map(employee => {
+          return (
           <div>
-            {employee.getLastname()}
+            従業員名: {employee.getLastname()} {employee.getFirstname()}
+            性別: {gender(employee.getGender())} 
+            役職: {position(employee.getPosition())} 
           </div>
+          )
         })}
       </>
     );
